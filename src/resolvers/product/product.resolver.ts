@@ -3,10 +3,10 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql'
 import {
   CreateProductInput,
   GetProductInput,
-} from '../../schema/product/product.dto'
-import { Product } from '../../schema/product/product.schema'
-import ProductService from '../../service/product/product.service'
-import Context from '../../types/context'
+} from 'src/schema/product/product.dto'
+import { Product } from 'src/schema/product/product.schema'
+import ProductService from 'src/service/product/product.service'
+import Context from 'src/types/context'
 
 @Resolver()
 export default class ProductResolver {

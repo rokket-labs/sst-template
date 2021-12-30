@@ -1,6 +1,6 @@
 import { getModelForClass, index, pre, prop } from '@typegoose/typegoose'
 import { AsQueryMethod, ReturnModelType } from '@typegoose/typegoose/lib/types'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { Field, ObjectType } from 'type-graphql'
 
 interface QueryHelpers {

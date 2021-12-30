@@ -1,9 +1,9 @@
 import {
   CreateProductInput,
   GetProductInput,
-} from '../../schema/product/product.dto'
-import { ProductModel } from '../../schema/product/product.schema'
-import { User } from '../../schema/user/user.schema'
+} from 'src/schema/product/product.dto'
+import { ProductModel } from 'src/schema/product/product.schema'
+import { User } from 'src/schema/user/user.schema'
 
 class ProductService {
   async createProduct(input: CreateProductInput & { user: User['_id'] }) {

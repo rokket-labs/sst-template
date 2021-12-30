@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/node14",
   "compilerOptions": {
+    "baseUrl": ".",
     "module": "commonjs",
     "target": "ES2018",
     "lib": ["ES2018", "ESNext.AsyncIterable"],
@@ -11,7 +12,7 @@
     "strictPropertyInitialization": false,
     "strict": true,
     "skipLibCheck": true,
-    "allowJs": true
+    "allowJs": false
   },
-  "include": ["stacks", "src", "config"]
+  "include": ["stacks", "src"]
 }

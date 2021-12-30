@@ -8,24 +8,23 @@ if (!uri)
     'Please define the MONGODB_URI environment variable inside .env.local',
   )
 
-let clientPromise: Promise<typeof mongoose>
-
-const opts = {
+const opts: mongoose.ConnectOptions = {
   bufferCommands: false,
+  autoIndex: isLocal,
 }
 
-interface Global {
-  _mongoosePromise: Promise<typeof mongoose>
+let cachedConnection: typeof mongoose
+
+export default async () => {
+  if (cachedConnection) {
+    console.log('connection was cached')
+
+    return cachedConnection
+  }
+
+  console.log('connection not cached')
+
+  cachedConnection = await mongoose.connect(uri, opts)
+
+  return cachedConnection
 }
-
-// eslint-disable-next-line no-var
-declare var global: Global
-
-if (isLocal) {
-  if (!global._mongoosePromise)
-    global._mongoosePromise = mongoose.connect(uri, opts)
-
-  clientPromise = global._mongoosePromise
-} else clientPromise = mongoose.connect(uri, opts)
-
-export default clientPromise

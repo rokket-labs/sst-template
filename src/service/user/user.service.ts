@@ -1,10 +1,10 @@
 import { ApolloError } from 'apollo-server-lambda'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
-import { CreateUserInput, LoginInput } from '../../schema/user/user.dto'
-import { UserModel } from '../../schema/user/user.schema'
-import Context from '../../types/context'
-import { signJwt } from '../../utils/jwt'
+import { CreateUserInput, LoginInput } from 'src/schema/user/user.dto'
+import { UserModel } from 'src/schema/user/user.schema'
+import Context from 'src/types/context'
+import { signJwt } from 'src/utils/jwt'
 
 export default class UserService {
   async createUser(input: CreateUserInput) {

@@ -9,7 +9,7 @@ export default class MyStack extends sst.Stack {
         handler: 'src/graphql.handler',
         bundle: {
           esbuildConfig: {
-            plugins: 'config/esbuild.ts',
+            plugins: 'config/esbuild.js',
           },
         },
       },
