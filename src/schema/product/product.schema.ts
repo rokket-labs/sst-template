@@ -29,7 +29,7 @@ export class Product {
   price: string
 
   @Field(() => String)
-  @prop({ required: true, default: () => `product_${nanoid()}, unique: true}` })
+  @prop({ required: true, default: () => `product_${nanoid()}`, unique: true })
   productId: string
 }
 

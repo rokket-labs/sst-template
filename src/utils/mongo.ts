@@ -16,13 +16,7 @@ const opts: mongoose.ConnectOptions = {
 let cachedConnection: typeof mongoose
 
 export default async () => {
-  if (cachedConnection) {
-    console.log('connection was cached')
-
-    return cachedConnection
-  }
-
-  console.log('connection not cached')
+  if (cachedConnection) return cachedConnection
 
   cachedConnection = await mongoose.connect(uri, opts)
 

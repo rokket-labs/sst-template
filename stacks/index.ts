@@ -8,6 +8,8 @@ export default function main(app: sst.App): void {
     runtime: 'nodejs14.x',
     environment: {
       MONGODB_URI: process.env.MONGODB_URI ?? '',
+      PUBLIC_KEY: process.env.PUBLIC_KEY ?? '',
+      PRIVATE_KEY: process.env.PRIVATE_KEY ?? '',
     },
   })
 

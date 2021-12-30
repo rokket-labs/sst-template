@@ -4,7 +4,9 @@ import { buildSchema } from 'type-graphql'
 
 import 'reflect-metadata'
 
+import { User } from './schema/user/user.schema'
 import authChecker from './utils/authChecker'
+import { verifyJwt } from './utils/jwt'
 import dbConnect from './utils/mongo'
 import { resolvers } from './resolvers'
 
@@ -25,7 +27,13 @@ export const handler = async (
 
   const server = new ApolloServer({
     context: ctx => {
-      // console.log(ctx)
+      const token = ctx.express.req.headers.authorization
+
+      if (token) {
+        const user = verifyJwt<User>(token)
+
+        ctx.context.user = user
+      }
 
       return ctx
     },

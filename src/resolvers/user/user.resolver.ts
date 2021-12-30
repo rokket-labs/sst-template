@@ -7,7 +7,9 @@ import Context from 'src/types/context'
 
 @Resolver()
 export default class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {
+    this.userService = new UserService()
+  }
 
   @Mutation(() => User)
   createUser(@Arg('input') input: CreateUserInput) {
@@ -15,12 +17,12 @@ export default class UserResolver {
   }
 
   @Mutation(() => String) // Returns the JWT
-  login(@Arg('input') input: LoginInput, @Ctx() context: Context) {
-    return this.userService.login(input, context)
+  login(@Arg('input') input: LoginInput) {
+    return this.userService.login(input)
   }
 
   @Query(() => User, { nullable: true })
-  me(@Ctx() context: Context) {
-    return context.user
+  me(@Ctx() ctx: Context) {
+    return ctx.context.user
   }
 }

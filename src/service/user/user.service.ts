@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 
 import { CreateUserInput, LoginInput } from 'src/schema/user/user.dto'
 import { UserModel } from 'src/schema/user/user.schema'
-import Context from 'src/types/context'
 import { signJwt } from 'src/utils/jwt'
 
 export default class UserService {
@@ -11,7 +10,7 @@ export default class UserService {
     return UserModel.create(input)
   }
 
-  async login(input: LoginInput, context: Context) {
+  async login(input: LoginInput) {
     const e = 'Invalid email or password'
 
     // Get our user by email

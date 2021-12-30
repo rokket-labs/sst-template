@@ -1,11 +1,11 @@
-import { Request, Response } from 'express'
+import { LambdaContextFunctionParams } from 'apollo-server-lambda/dist/ApolloServer'
 
 import { User } from '../schema/user/user.schema'
 
-interface Context {
-  req: Request
-  res: Response
-  user: User | null
+interface Context extends LambdaContextFunctionParams {
+  context: {
+    user: User | null
+  }
 }
 
 export default Context

@@ -1,4 +1,10 @@
-import { getModelForClass, index, pre, prop } from '@typegoose/typegoose'
+import {
+  getModelForClass,
+  index,
+  pre,
+  prop,
+  queryMethod,
+} from '@typegoose/typegoose'
 import { AsQueryMethod, ReturnModelType } from '@typegoose/typegoose/lib/types'
 import bcrypt from 'bcryptjs'
 import { Field, ObjectType } from 'type-graphql'
@@ -25,6 +31,7 @@ function findByEmail(
   this.password = hash
 })
 @index({ email: 1 })
+@queryMethod(findByEmail)
 @ObjectType()
 export class User {
   @Field(() => String)

@@ -10,15 +10,14 @@ import Context from 'src/types/context'
 
 @Resolver()
 export default class ProductResolver {
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) {
+    this.productService = new ProductService()
+  }
 
   @Authorized()
   @Mutation(() => Product)
-  createProduct(
-    @Arg('input') input: CreateProductInput,
-    @Ctx() context: Context,
-  ) {
-    const { user } = context
+  createProduct(@Arg('input') input: CreateProductInput, @Ctx() ctx: Context) {
+    const { user } = ctx.context
 
     if (!user) throw new Error('no user')
 
