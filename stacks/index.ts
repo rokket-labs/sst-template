@@ -1,19 +1,23 @@
 import * as sst from '@serverless-stack/resources'
 
-import MyStack from './MyStack'
+import { ApiStack } from './ApiStack'
+import { AuthStack } from './AuthStack'
+import { StorageStack } from './StorageStack'
 
 export default function main(app: sst.App): void {
   // Set default runtime for all functions
   app.setDefaultFunctionProps({
     runtime: 'nodejs14.x',
-    environment: {
-      MONGODB_URI: process.env.MONGODB_URI ?? '',
-      PUBLIC_KEY: process.env.PUBLIC_KEY ?? '',
-      PRIVATE_KEY: process.env.PRIVATE_KEY ?? '',
+    bundle: {
+      esbuildConfig: {
+        plugins: 'config/esbuild.js',
+      },
     },
   })
 
-  new MyStack(app, 'rokket-labs-stack')
+  const authStack = new AuthStack(app, 'Auth')
 
-  // Add more stacks
+  new ApiStack(app, 'Api', { auth: authStack.auth })
+
+  new StorageStack(app, 'Storage')
 }

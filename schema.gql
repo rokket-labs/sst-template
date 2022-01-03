@@ -9,25 +9,13 @@ input CreateProductInput {
   price: Float!
 }
 
-input CreateUserInput {
-  email: String!
-  name: String!
-  password: String!
-}
-
 input GetProductInput {
   productId: String!
 }
 
-input LoginInput {
-  email: String!
-  password: String!
-}
-
 type Mutation {
   createProduct(input: CreateProductInput!): Product!
-  createUser(input: CreateUserInput!): User!
-  login(input: LoginInput!): String!
+  updateUser(input: UpdateUserInput!): User!
 }
 
 type Product {
@@ -43,6 +31,11 @@ type Query {
   me: User
   product(input: GetProductInput!): Product!
   products: [Product!]!
+}
+
+input UpdateUserInput {
+  email: String!
+  name: String
 }
 
 type User {

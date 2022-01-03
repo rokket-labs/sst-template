@@ -1,16 +1,10 @@
-import {
-  getModelForClass,
-  index,
-  pre,
-  prop,
-  queryMethod,
-} from '@typegoose/typegoose'
+import { getModelForClass, prop, queryMethod } from '@typegoose/typegoose'
 import { AsQueryMethod, ReturnModelType } from '@typegoose/typegoose/lib/types'
-import bcrypt from 'bcryptjs'
 import { Field, ObjectType } from 'type-graphql'
 
 interface QueryHelpers {
   findByEmail: AsQueryMethod<typeof findByEmail>
+  findBySub: AsQueryMethod<typeof findBySub>
 }
 
 function findByEmail(
@@ -20,33 +14,30 @@ function findByEmail(
   return this.findOne({ email })
 }
 
-@pre<User>('save', async function () {
-  // Check that the password is being modified
-  if (!this.isModified('password')) return
+function findBySub(
+  this: ReturnModelType<typeof User, QueryHelpers>,
+  sub: User['sub'],
+) {
+  return this.findOne({ sub })
+}
 
-  const salt = await bcrypt.genSalt(10)
-
-  const hash = await bcrypt.hashSync(this.password, salt)
-
-  this.password = hash
-})
-@index({ email: 1 })
 @queryMethod(findByEmail)
+@queryMethod(findBySub)
 @ObjectType()
 export class User {
   @Field(() => String)
   _id: string
 
   @Field(() => String)
-  @prop({ required: true })
+  @prop()
   name: string
 
-  @Field(() => String)
-  @prop({ required: true })
-  email: string
+  @prop({ required: true, unique: true, index: true })
+  sub: string
 
-  @prop({ required: true })
-  password: string
+  @Field(() => String)
+  @prop({ required: true, unique: true })
+  email: string
 }
 
 export const UserModel = getModelForClass<typeof User, QueryHelpers>(User)

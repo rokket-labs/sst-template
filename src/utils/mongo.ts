@@ -15,7 +15,7 @@ const opts: mongoose.ConnectOptions = {
 
 let cachedConnection: typeof mongoose
 
-export default async () => {
+export const dbConnect = async () => {
   if (cachedConnection) return cachedConnection
 
   cachedConnection = await mongoose.connect(uri, opts)
