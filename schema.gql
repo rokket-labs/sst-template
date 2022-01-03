@@ -18,6 +18,30 @@ type Mutation {
   updateUser(input: UpdateUserInput!): User!
 }
 
+input PaginatedInputOptions {
+  lean: Boolean = false
+  limit: Float = 10
+  offset: Float = 0
+  page: Float = 1
+  pagination: Boolean = true
+  populate: String
+  select: String
+  sort: String
+}
+
+type PaginatedProducts {
+  docs: [Product!]!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  limit: Float!
+  nextPage: Float
+  page: Float!
+  pagingCounter: Float!
+  prevPage: Float
+  totalDocs: Float!
+  totalPages: Float!
+}
+
 type Product {
   _id: String!
   description: String!
@@ -30,7 +54,7 @@ type Product {
 type Query {
   me: User
   product(input: GetProductInput!): Product!
-  products: [Product!]!
+  products(pagination: PaginatedInputOptions!): PaginatedProducts!
 }
 
 input UpdateUserInput {

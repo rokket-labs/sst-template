@@ -21,7 +21,7 @@ export const handler = async (
   const schema = await buildSchema({
     resolvers,
     authChecker,
-    emitSchemaFile: true,
+    emitSchemaFile: IS_LOCAL,
   })
 
   const server = new ApolloServer({

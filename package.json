@@ -16,6 +16,7 @@
     "@types/aws-lambda": "^8.10.70",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.6",
+    "@types/mongoose-paginate-v2": "^1.4.2",
     "@types/node": "<15.0.0",
     "@types/ramda": "^0.27.62",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-authorizers": "1.132.0",
+    "@aws-cdk/aws-cognito": "1.132.0",
     "@aws-cdk/aws-iam": "1.132.0",
     "@aws-cdk/core": "1.132.0",
     "@serverless-stack/cli": "0.56.1",
@@ -40,6 +42,7 @@
     "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.4",
+    "mongoose-paginate-v2": "^1.4.2",
     "nanoid": "^3.1.30",
     "ramda": "^0.27.1",
     "reflect-metadata": "^0.1.13",

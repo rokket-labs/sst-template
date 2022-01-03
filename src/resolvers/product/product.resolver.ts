@@ -4,9 +4,10 @@ import {
   CreateProductInput,
   GetProductInput,
 } from 'src/schema/product/product.dto'
-import { Product } from 'src/schema/product/product.schema'
+import { PaginatedProducts, Product } from 'src/schema/product/product.schema'
 import ProductService from 'src/service/product/product.service'
 import Context from 'src/types/context'
+import { PaginatedInputOptions } from 'src/utils/schemas/PaginatedOptions.dto'
 
 @Resolver()
 export default class ProductResolver {
@@ -19,14 +20,14 @@ export default class ProductResolver {
   createProduct(@Arg('input') input: CreateProductInput, @Ctx() ctx: Context) {
     const { user } = ctx.context
 
-    if (!user) throw new Error('no user')
+    if (!user) throw new Error('No user')
 
     return this.productService.createProduct({ ...input, user: user?._id })
   }
 
-  @Query(() => [Product])
-  products() {
-    return this.productService.findProducts()
+  @Query(() => PaginatedProducts)
+  products(@Arg('pagination') options: PaginatedInputOptions) {
+    return this.productService.findProducts(options)
   }
 
   @Query(() => Product)
