@@ -10,7 +10,7 @@ This project was bootstrapped with [Create Serverless Stack](https://docs.server
 - [x] S3 Bucket configuration and permissions
 - [x] Apollo GraphQL with Code First approach (TypeGraphQL)
 - [x] MongoDB with Typegoose
-- [] RBAC Authorization examples with Oso
+- [x] RBAC Authorization examples
 - [] SES Configuration
 - [x] Pagination model examples
 - [] Jest test environment
