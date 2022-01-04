@@ -54,7 +54,7 @@ type Product {
 type Query {
   me: User
   product(input: GetProductInput!): Product!
-  products(pagination: PaginatedInputOptions!): PaginatedProducts!
+  products(pagination: PaginatedInputOptions): PaginatedProducts!
 }
 
 input UpdateUserInput {

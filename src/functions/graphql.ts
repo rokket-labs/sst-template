@@ -28,12 +28,14 @@ export const handler = async (
     context: async ctx => {
       const token = ctx.express.req.headers.authorization
 
-      if (!token)
+      if (!token && !IS_LOCAL)
         throw new AuthenticationError('You must be logged in to access')
 
-      const user = await getUserFromToken(token)
+      if (token) {
+        const user = await getUserFromToken(token)
 
-      ctx.context.user = user
+        ctx.context.user = user
+      }
 
       return ctx
     },

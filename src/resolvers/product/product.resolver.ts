@@ -25,8 +25,11 @@ export default class ProductResolver {
     return this.productService.createProduct({ ...input, user: user?._id })
   }
 
+  @Authorized('ADMIN')
   @Query(() => PaginatedProducts)
-  products(@Arg('pagination') options: PaginatedInputOptions) {
+  products(
+    @Arg('pagination', { nullable: true }) options: PaginatedInputOptions,
+  ) {
     return this.productService.findProducts(options)
   }
 
