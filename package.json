@@ -7,7 +7,10 @@
     "start": "sst start",
     "build": "sst build",
     "deploy": "sst deploy",
-    "remove": "sst remove"
+    "remove": "sst remove",
+    "lint": "eslint src --fix",
+    "prettier": "prettier --write",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@anatine/esbuild-decorators": "^0.2.18",
@@ -26,6 +29,8 @@
     "eslint-config-rokket-labs": "^0.4.10",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.5",
     "prettier": "^2.5.1"
   },
   "dependencies": {
@@ -49,5 +54,11 @@
     "ramda": "^0.27.1",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "yarn prettier",
+      "yarn lint"
+    ]
   }
 }
