@@ -2,6 +2,8 @@ import 'reflect-metadata'
 
 import { ApolloServer, AuthenticationError } from 'apollo-server-lambda'
 import { APIGatewayProxyEventV2, Callback, Context } from 'aws-lambda'
+import { ObjectIDResolver } from 'graphql-scalars'
+import { ObjectId } from 'mongodb'
 import { buildSchema } from 'type-graphql'
 
 import { resolvers } from 'src/resolvers'
@@ -22,6 +24,8 @@ export const handler = async (
     resolvers,
     authChecker,
     emitSchemaFile: IS_LOCAL,
+    // Add any default associations for custom scalars here
+    scalarsMap: [{ type: ObjectId, scalar: ObjectIDResolver }],
   })
 
   const server = new ApolloServer({

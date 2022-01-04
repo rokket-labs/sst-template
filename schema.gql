@@ -9,17 +9,28 @@ input CreateProductInput {
   price: Float!
 }
 
+"""
+A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+"""
+scalar EmailAddress @specifiedBy(url: "https://www.w3.org/Protocols/rfc822/")
+
 input GetProductInput {
   productId: String!
 }
 
 type Mutation {
   createProduct(input: CreateProductInput!): Product!
+  deleteProduct(id: String!): Product!
   updateUser(input: UpdateUserInput!): User!
 }
 
+"""
+A field whose value conforms with the standard mongodb object ID as described here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId. Example: 5e5677d71bdc2ae76344968c
+"""
+scalar ObjectID
+
 input PaginatedInputOptions {
-  lean: Boolean = false
+  lean: Boolean = true
   limit: Float = 10
   offset: Float = 0
   page: Float = 1
@@ -43,27 +54,28 @@ type PaginatedProducts {
 }
 
 type Product {
-  _id: String!
+  _id: ObjectID!
   description: String!
   name: String!
   price: String!
   productId: String!
-  user: String!
+  user: User!
 }
 
 type Query {
   me: User
-  product(input: GetProductInput!): Product!
+  product(input: GetProductInput!): Product
   products(pagination: PaginatedInputOptions): PaginatedProducts!
 }
 
 input UpdateUserInput {
-  email: String!
+  email: EmailAddress!
   name: String
 }
 
 type User {
-  _id: String!
-  email: String!
-  name: String!
+  _id: ObjectID!
+  email: EmailAddress!
+  name: String
+  roles: [String!]!
 }

@@ -20,7 +20,7 @@ export class PaginatedInputOptions {
   @Field({ nullable: true })
   populate?: string
 
-  @Field({ nullable: true, defaultValue: false })
+  @Field({ nullable: true, defaultValue: true })
   lean: boolean
 
   @Field({ nullable: true, defaultValue: true })

@@ -1,6 +1,30 @@
 import { getModelForClass, prop, queryMethod } from '@typegoose/typegoose'
 import { AsQueryMethod, ReturnModelType } from '@typegoose/typegoose/lib/types'
-import { Field, ObjectType } from 'type-graphql'
+import { EmailAddressResolver } from 'graphql-scalars'
+import { ObjectId } from 'mongodb'
+import { Field, ObjectType, registerEnumType } from 'type-graphql'
+
+export enum Roles {
+  ADMIN = 'admin',
+  MAINTAINER = 'maintainer',
+  USER = 'user',
+}
+
+registerEnumType(Roles, {
+  name: 'Roles',
+  description: 'App roles for each user',
+  valuesConfig: {
+    ADMIN: {
+      description: 'Access to all parameters',
+    },
+    MAINTAINER: {
+      description: 'No access to destructive actions (delete)',
+    },
+    USER: {
+      description: 'Read only permissions',
+    },
+  },
+})
 
 interface QueryHelpers {
   findByEmail: AsQueryMethod<typeof findByEmail>
@@ -25,19 +49,23 @@ function findBySub(
 @queryMethod(findBySub)
 @ObjectType()
 export class User {
-  @Field(() => String)
-  _id: string
+  @Field()
+  _id: ObjectId
 
-  @Field(() => String)
-  @prop()
-  name: string
-
-  @prop({ required: true, unique: true, index: true })
+  @prop({ required: true, unique: true })
   sub: string
 
-  @Field(() => String)
+  @Field(() => EmailAddressResolver)
   @prop({ required: true, unique: true })
   email: string
+
+  @Field(() => [String])
+  @prop({ required: true, enum: Roles, type: [String], default: [Roles.USER] })
+  roles: Roles[]
+
+  @Field({ nullable: true })
+  @prop()
+  name?: string
 }
 
 export const UserModel = getModelForClass<typeof User, QueryHelpers>(User)

@@ -5,16 +5,11 @@ import { User } from 'src/schema/user/user.schema'
 import UserService from 'src/service/user/user.service'
 import Context from 'src/types/context'
 
-@Resolver()
+@Resolver(User)
 export default class UserResolver {
   constructor(private userService: UserService) {
     this.userService = new UserService()
   }
-
-  // @Mutation(() => User)
-  // createUser(@Arg('input') input: CreateUserInput) {
-  //   return this.userService.createUser(input)
-  // }
 
   @Mutation(() => User)
   updateUser(@Arg('input') input: UpdateUserInput) {

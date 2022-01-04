@@ -19,6 +19,10 @@ class ProductService {
   async findSingleProduct(input: GetProductInput) {
     return ProductModel.findOne(input).lean()
   }
+
+  async deleteProduct(id: string) {
+    return ProductModel.findByIdAndDelete(id).lean()
+  }
 }
 
 export default ProductService

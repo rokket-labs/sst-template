@@ -1,4 +1,5 @@
 import { getModelForClass, index, prop, Ref } from '@typegoose/typegoose'
+import { ObjectId } from 'mongodb'
 import { customAlphabet } from 'nanoid'
 import { Field, ObjectType } from 'type-graphql'
 
@@ -14,10 +15,10 @@ const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz123456789', 10)
 @ObjectType()
 @index({ productId: 1 })
 export class Product extends PaginatedModel {
-  @Field(() => String)
-  _id: string
+  @Field()
+  _id: ObjectId
 
-  @Field(() => String)
+  @Field(() => User)
   @prop({ required: true, ref: () => User })
   user: Ref<User>
 

@@ -1,3 +1,4 @@
+import { EmailAddressResolver } from 'graphql-scalars'
 import { Field, InputType } from 'type-graphql'
 
 export class CreateUserInput {
@@ -7,7 +8,7 @@ export class CreateUserInput {
 
 @InputType()
 export class UpdateUserInput {
-  @Field()
+  @Field(() => EmailAddressResolver)
   email: string
 
   @Field({ nullable: true })
