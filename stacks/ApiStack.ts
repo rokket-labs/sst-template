@@ -10,9 +10,12 @@ import {
   StackProps,
 } from '@serverless-stack/resources'
 
+import { getParameterByEnvOrName } from './SSM'
+
 interface ApiStackProps extends StackProps {
   readonly auth: Auth
   readonly bucket: Bucket
+  readonly parameters: Record<string, string | undefined>
 }
 
 export class ApiStack extends Stack {
@@ -20,7 +23,7 @@ export class ApiStack extends Stack {
     super(scope, id, props)
 
     const isLocal = scope.local
-    const { auth, bucket } = props
+    const { auth, bucket, parameters } = props
 
     let importedUserPool
     let importedUserPoolClient
@@ -47,12 +50,15 @@ export class ApiStack extends Stack {
     const cognitoAuthorizer = auth.cognitoUserPool &&
       auth.cognitoUserPoolClient && {
         defaultAuthorizationType: ApiAuthorizationType.JWT,
-        defaultAuthorizer: new HttpUserPoolAuthorizer({
-          userPool: importedUserPool || auth.cognitoUserPool,
-          userPoolClients: [
-            importedUserPoolClient || auth.cognitoUserPoolClient,
-          ],
-        }),
+        defaultAuthorizer: new HttpUserPoolAuthorizer(
+          'Authorizer',
+          importedUserPool || auth.cognitoUserPool,
+          {
+            userPoolClients: [
+              importedUserPoolClient || auth.cognitoUserPoolClient,
+            ],
+          },
+        ),
       }
 
     // Create the API instance
@@ -61,7 +67,12 @@ export class ApiStack extends Stack {
       server: {
         handler: 'src/functions/graphql.handler',
         environment: {
-          MONGODB_URI: process.env.MONGODB_URI ?? '',
+          MONGODB_URI: getParameterByEnvOrName({
+            app: scope,
+            parameters,
+            env: 'MONGODB_URI',
+            key: 'mongodb-uri',
+          }),
         },
       },
       rootPath: '/graphql',

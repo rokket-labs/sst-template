@@ -14,5 +14,5 @@
     "skipLibCheck": true,
     "allowJs": false
   },
-  "include": ["stacks", "src"]
+  "include": ["stacks", "src", "**/*.d.ts"]
 }
