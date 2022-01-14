@@ -1,5 +1,5 @@
-import { RemovalPolicy } from '@aws-cdk/core'
 import { App, Bucket, Stack, StackProps } from '@serverless-stack/resources'
+import { RemovalPolicy } from 'aws-cdk-lib'
 
 export class StorageStack extends Stack {
   public readonly bucket: Bucket

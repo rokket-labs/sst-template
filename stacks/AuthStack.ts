@@ -1,5 +1,3 @@
-import { UserPoolEmail } from '@aws-cdk/aws-cognito'
-import { Effect, PolicyStatement } from '@aws-cdk/aws-iam'
 import {
   App,
   Auth,
@@ -7,6 +5,8 @@ import {
   Stack,
   StackProps,
 } from '@serverless-stack/resources'
+import { UserPoolEmail } from 'aws-cdk-lib/aws-cognito'
+import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 
 interface AuthStackProps extends StackProps {
   readonly bucket: Bucket

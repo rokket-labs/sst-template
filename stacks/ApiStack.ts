@@ -1,5 +1,4 @@
-import { HttpUserPoolAuthorizer } from '@aws-cdk/aws-apigatewayv2-authorizers'
-import { UserPool, UserPoolClient } from '@aws-cdk/aws-cognito'
+import { HttpUserPoolAuthorizer } from '@aws-cdk/aws-apigatewayv2-authorizers-alpha'
 import {
   ApiAuthorizationType,
   ApolloApi,
@@ -9,6 +8,7 @@ import {
   Stack,
   StackProps,
 } from '@serverless-stack/resources'
+import { UserPool, UserPoolClient } from 'aws-cdk-lib/aws-cognito'
 
 import { getParameterByEnvOrName } from './SSM'
 
