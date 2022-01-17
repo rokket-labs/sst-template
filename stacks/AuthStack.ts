@@ -10,6 +10,7 @@ import { Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam'
 
 interface AuthStackProps extends StackProps {
   readonly bucket: Bucket
+  readonly emailTemplateBucket?: Bucket
   readonly parameters: Record<string, string | undefined>
 }
 
@@ -33,7 +34,12 @@ export class AuthStack extends Stack {
             },
           },
           // Send custom HTML email messages for code verification and password recovery
-          customMessage: 'src/functions/customMessage.handler',
+          customMessage: {
+            ...(props?.emailTemplateBucket && {
+              handler: 'src/functions/customMessage.handler',
+              permissions: [props.emailTemplateBucket],
+            }),
+          },
         },
         userPool: {
           selfSignUpEnabled: true,

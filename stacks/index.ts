@@ -2,6 +2,7 @@ import { App } from '@serverless-stack/resources'
 
 import { ApiStack } from './ApiStack'
 import { AuthStack } from './AuthStack'
+import { EmailStack } from './EmailStack'
 import { getParameters } from './SSM'
 import { StorageStack } from './StorageStack'
 
@@ -24,10 +25,13 @@ export default async function main(app: App): Promise<void> {
   // Get SSM Values
   const parameters = await getParameters(app)
 
+  const emailBucket = new EmailStack(app, 'EmailTemplates')
+
   const storageStack = new StorageStack(app, 'Storage')
 
   const authStack = new AuthStack(app, 'Auth', {
     bucket: storageStack.bucket,
+    emailTemplateBucket: emailBucket.bucket,
     parameters,
   })
 
