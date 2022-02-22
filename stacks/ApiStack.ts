@@ -1,10 +1,10 @@
 import { HttpUserPoolAuthorizer } from '@aws-cdk/aws-apigatewayv2-authorizers-alpha'
 import {
   ApiAuthorizationType,
-  ApolloApi,
   App,
   Auth,
   Bucket,
+  GraphQLApi,
   Stack,
   StackProps,
 } from '@serverless-stack/resources'
@@ -62,7 +62,7 @@ export class ApiStack extends Stack {
       }
 
     // Create the API instance
-    const api = new ApolloApi(this, 'Apollo', {
+    const api = new GraphQLApi(this, 'Apollo', {
       ...(!isLocal && cognitoAuthorizer),
       server: {
         handler: 'src/functions/graphql.handler',
