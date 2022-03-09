@@ -18,7 +18,7 @@ export default async function main(app: App): Promise<void> {
       },
       externalModules: ['aws-sdk'],
       nodeModules: ['uglify-js'],
-      format: 'esm',
+      format: 'cjs',
     },
   })
 
