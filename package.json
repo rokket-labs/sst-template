@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-authorizers-alpha": "2.15.0-alpha.0",
-    "@serverless-stack/cli": "0.68.0",
-    "@serverless-stack/resources": "0.68.0",
+    "@serverless-stack/cli": "0.69.0",
+    "@serverless-stack/resources": "0.69.0",
     "@typegoose/typegoose": "^9.7.0",
     "apollo-server-lambda": "^3.6.3",
     "aws-cdk-lib": "2.15.0",
